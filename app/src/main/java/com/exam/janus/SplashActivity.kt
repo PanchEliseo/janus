@@ -49,6 +49,7 @@ class SplashActivity: AppCompatActivity() {
                 }
                 Status.ERROR -> {
                     Log.i("ON", "ERROR")
+                    finish()
                 }
             }
         })

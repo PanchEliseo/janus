@@ -15,7 +15,9 @@ import com.exam.janus.R
 import com.exam.janus.api.Status
 import com.exam.janus.service.EmployeesResponse
 import com.exam.janus.ui.home.HomeViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.activity_login.*
 
 class EmployeeDetailActivity: AppCompatActivity() {
 
@@ -48,13 +50,17 @@ class EmployeeDetailActivity: AppCompatActivity() {
             when (it.status) {
                 Status.LOADING -> {
                     Log.i("ON", "LOGIN")
+                    progressBar.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
                     //Log.i("ON", "SUCCESS ${it.data!!.data}")
                     setView(it.data!!.data)
+                    progressBar.visibility = View.GONE
                 }
                 Status.ERROR -> {
                     Log.i("ON", "ERROR")
+                    progressBar.visibility = View.GONE
+                    Snackbar.make(container, "Error en el servicio", Snackbar.LENGTH_LONG).show()
                 }
             }
         })

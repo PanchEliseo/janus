@@ -1,8 +1,10 @@
 package com.exam.janus
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -24,6 +26,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     var reports = arrayListOf<EmployeesResponse>()
 
+    var imageResult: Bitmap? = null
+    lateinit var navView: NavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+        navView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -57,6 +62,16 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.i("IMAGE", "$imageResult")
+        if (imageResult != null){
+            val view = navView.getHeaderView(0)
+            val imageView = view.findViewById<ImageView>(R.id.imageView)
+            imageView.setImageBitmap(imageResult)
+        }
     }
 
     private fun getExtras(){
